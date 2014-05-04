@@ -1,0 +1,12 @@
+OLED_SSD1331	KEYWORD1
+begin	KEYWORD2
+clearScreen	KEYWORD2
+goHome	KEYWORD2
+goTo	KEYWORD2
+pushColor	KEYWORD2
+setBrightness	KEYWORD2
+writeData	KEYWORD2
+setBitrate	KEYWORD2
+Color565	KEYWORD2
+
+
