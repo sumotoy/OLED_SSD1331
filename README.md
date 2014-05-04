@@ -11,4 +11,9 @@ The features are:
 Version History:
  - 0.5b1: First working release with full tested 24Mhz/DMA SPI on Teensy 3.
  - 0.5b2: Even faster!
+
  
+Note:
+If you are using a chinese module from Ebay you should pay attention if it's already setup for SPI serial.
+If not, follow instructions of the seller to configure it.
+Some chinese module have been poorly designed so the supply 3V3 volt cannot be used since it's usually not drive correctly the internal hi-voltage dc converter. In that case use the 5v pin of the module, you can still drive it with 3v3 logic since it's compatible but leave unconnected the 3V3 pin.
