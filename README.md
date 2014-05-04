@@ -10,5 +10,5 @@ The features are:
 
 Version History:
  - 0.5b1: First working release with full tested 24Mhz/DMA SPI on Teensy 3.
- - 
+ - 0.5b2: Even faster!
  
