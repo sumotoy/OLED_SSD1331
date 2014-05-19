@@ -2,7 +2,7 @@
 
 #include "Adafruit_GFX.h"
 #include "OLED_SSD1331.h"
-#include "glcdfont.c"
+//#include "glcdfont.c" //comment out if you are using the custom version of Adafruit_GFX!!!!!!!!!
 #include <avr/pgmspace.h>
 #include "pins_arduino.h"
 #include "wiring_private.h"
