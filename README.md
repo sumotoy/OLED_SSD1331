@@ -1,5 +1,16 @@
 OLED_SSD1331
 ============
+
+ATTENTION!
+This library it's now using a modified version of Adafruit_GFX library https://github.com/sumotoy/Adafruit-GFX-Library
+That it's faster and almost 100& compatible with regular one (apart the new text rendering that support multiple fonts).
+If you plan to use the original Adafruit_GFX library you can still use it! Just uncomment this line in .cpp file of this library:
+
+//#include "glcdfont.c" //comment out if you are using the custom version of Adafruit_GFX!!!!!!!!!
+
+That's it.
+-------------------------------------------------------------------------------------------------------------------------
+
 This it's a Hyper Fast library for drive solomon tech SSD1332 OLED displays. It's compatible with Arduino, Arduino DUE and Teensy 3.x and uses native SPI.
 The features are:
  - Hyper Fast speed. On Teensy 3.x it uses SPI DMA at 24Mhz.
