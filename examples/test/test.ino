@@ -30,7 +30,7 @@ Note for Teensy 3.x !!!!!!!!!!!!!!!!!!!
 #define TRANSPARENT     -1
 
 
-OLED_SSD1332 display = OLED_SSD1332(cs, dc, rst);
+OLED_SSD1331 display = OLED_SSD1331(cs, dc, rst);
 
 float p = 3.1415926;
 

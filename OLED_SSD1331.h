@@ -56,6 +56,7 @@
 	Version:
 	0.5b1: First release, compile and working.
 	0.5b2: Even more faster! Tuned  a couple of fixed delays.
+	0.6b1: Cleaned code.
 	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	BugList of the current version:
 	
@@ -175,7 +176,7 @@ class OLED_SSD1331 : public Adafruit_GFX {
  private:
 	volatile bool 	reversal;
 	volatile bool 	filling;
-	
+	bool 			_inited;
 	void 			writeCommand(uint8_t c);
 	void  			writeCommands(uint8_t *cmd, uint8_t length);
 	void 			setRegister(const uint8_t reg,uint8_t val);
@@ -183,20 +184,20 @@ class OLED_SSD1331 : public Adafruit_GFX {
 	bool 			fillTool(bool fillState);//helper
 	void 			hdwre_drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color, bool filled = false);
 	
-	void     		writebegin();
-	void	 		spiwrite(uint8_t);
+
 	void 			chipInit();
 	void	 		commonInit();
 	
 #if defined(__AVR__)
+	void	 		spiwrite(uint8_t);
 	volatile uint8_t *dataport, *clkport, *csport, *rsport;
 	uint8_t 		_cs,_rs,_sid,_sclk,_rst;
-	uint8_t  		datapinmask, clkpinmask, cspinmask, rspinmask, colstart, rowstart;
+	uint8_t  		datapinmask, clkpinmask, cspinmask, rspinmask;
 #endif
 #if defined(__SAM3X8E__)
 	Pio *dataport, *clkport, *csport, *rsport;
 	uint8_t 		_cs,_rs,_sid,_sclk,_rst;
-	uint32_t  		datapinmask, clkpinmask, cspinmask, rspinmask, colstart, rowstart;
+	uint32_t  		datapinmask, clkpinmask, cspinmask, rspinmask;
 #endif 
 
 #if defined(__MK20DX128__) || defined(__MK20DX256__)

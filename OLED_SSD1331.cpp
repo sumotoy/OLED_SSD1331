@@ -13,7 +13,7 @@
 //Begin function
 void OLED_SSD1331::begin(void) {
 	commonInit();
-	chipInit();
+	if (_inited) chipInit();
 }
 
 
@@ -199,14 +199,14 @@ OLED_SSD1331::OLED_SSD1331(uint8_t cs, uint8_t rs, uint8_t rst) : Adafruit_GFX(O
     _cs = cs;
     _rs = rs;
     _rst = rst;
-	_sid  = _sclk = 0;
+	//_sid  = _sclk = 0;
 }
 
 OLED_SSD1331::OLED_SSD1331(uint8_t cs, uint8_t rs) : Adafruit_GFX(OLED_WIDTH, OLED_HEIGHT) {
     _cs = cs;
     _rs = rs;
     _rst = 0;
-	_sid  = _sclk = 0;
+	//_sid  = _sclk = 0;
 }
 
 //helper
@@ -217,10 +217,6 @@ void OLED_SSD1331::setRegister(const uint8_t reg,uint8_t val){
 
 /********************************** low level pin interface */
 #ifdef __AVR__
-
-	inline void OLED_SSD1331::writebegin()
-	{
-	}
 
 	inline void OLED_SSD1331::spiwrite(uint8_t c){
 		SPDR = c;
@@ -262,10 +258,6 @@ void OLED_SSD1331::setRegister(const uint8_t reg,uint8_t val){
 		}
 	}
 #elif defined(__SAM3X8E__)
-
-	inline void OLED_SSD1331::writebegin()
-	{
-	}
 	
 	inline void OLED_SSD1331::spiwrite(uint8_t c){
 		SPI.transfer(c);
@@ -304,18 +296,6 @@ void OLED_SSD1331::setRegister(const uint8_t reg,uint8_t val){
 		SPI.setClockDivider(divider);
 	}
 #elif defined(__MK20DX128__) || defined(__MK20DX256__)
-	
-	inline void OLED_SSD1331::writebegin()
-	{
-	}
-	
-	inline void OLED_SSD1331::spiwrite(uint8_t c){
-		for (uint8_t bit = 0x80; bit; bit >>= 1) {
-			*datapin = ((c & bit) ? 1 : 0);
-			*clkpin = 1;
-			*clkpin = 0;
-		}
-	}
 	
 	void OLED_SSD1331::writeCommand(uint8_t c){
 		SPI0.PUSHR = c | (pcs_command << 16) | SPI_PUSHR_CTAS(0);
@@ -478,6 +458,7 @@ void OLED_SSD1331::commonInit(){
     SPI.setBitOrder(MSBFIRST);
     SPI.setDataMode(SPI_MODE0);
 	*csport &= ~cspinmask;
+	_inited = true;
 #elif defined(__SAM3X8E__) 
 	pinMode(_rs, OUTPUT);
 	pinMode(_cs, OUTPUT);
@@ -492,9 +473,10 @@ void OLED_SSD1331::commonInit(){
     SPI.setDataMode(SPI_MODE0);
 	// toggle RST low to reset; CS low so it'll listen to us
 	csport ->PIO_CODR  |=  cspinmask; // Set control bits to LOW (idle)
+	_inited = true;
 #elif defined(__MK20DX128__) || defined(__MK20DX256__)
-	if (_sid == 0) _sid = 11;
-	if (_sclk == 0) _sclk = 13;
+	_sid = 11;
+	_sclk = 13;
 	if (spi_pin_is_cs(_cs) && spi_pin_is_cs(_rs)
 	 && (_sid == 7 || _sid == 11) && (_sclk == 13 || _sclk == 14)
 	 && !(_cs ==  2 && _rs == 10) && !(_rs ==  2 && _cs == 10)
@@ -524,11 +506,12 @@ void OLED_SSD1331::commonInit(){
 		SPI0.CTAR1 = ctar | SPI_CTAR_FMSZ(15);
 		SPI0.MCR = SPI_MCR_MSTR | SPI_MCR_PCSIS(0x1F) | SPI_MCR_CLR_TXF | SPI_MCR_CLR_RXF;
 	} else {
+		_inited = false;
 		//error! cannot continue
 		// TODO!  Escape code to stop all
 	}	
 #endif
-	if (_rst) {
+	if (_inited && _rst) {
 		pinMode(_rst, OUTPUT);
 		digitalWrite(_rst, HIGH);
 		delay(500);
