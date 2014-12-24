@@ -195,6 +195,7 @@ class OLED_SSD1331 : public Adafruit_GFX {
 	uint8_t  		datapinmask, clkpinmask, cspinmask, rspinmask;
 #endif
 #if defined(__SAM3X8E__)
+	void	 		spiwrite(uint8_t);
 	Pio *dataport, *clkport, *csport, *rsport;
 	uint8_t 		_cs,_rs,_sid,_sclk,_rst;
 	uint32_t  		datapinmask, clkpinmask, cspinmask, rspinmask;
