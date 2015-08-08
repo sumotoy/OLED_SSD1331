@@ -57,6 +57,7 @@
 	0.5b1: First release, compile and working.
 	0.5b2: Even more faster! Tuned  a couple of fixed delays.
 	0.6b1: Cleaned code.
+	0.7: Updated for Teensyduino 1.24
 	+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	BugList of the current version:
 	
