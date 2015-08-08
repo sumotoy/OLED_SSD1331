@@ -22,6 +22,7 @@ The features are:
 Version History:
  - 0.5b1: First working release with full tested 24Mhz/DMA SPI on Teensy 3.
  - 0.5b2: Even faster!
+ - 0.6:Compatible with Teensyduino 1.24
 
  
 Note:
